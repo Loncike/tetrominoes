@@ -232,9 +232,12 @@ static const Color TetrominoColors[7] = {SKYBLUE, YELLOW, PURPLE, GREEN, RED, BL
 typedef struct{
    int score;
    int highScore;
+
+   int level;
 }GlobalState;
 
 typedef enum{
+  SCENE_MAINMENUSCENE,
   SCENE_GAMESCENE,
   SCENE_GAMEOVERSCENE,
 }Scenes;

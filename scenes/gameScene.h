@@ -17,6 +17,8 @@ typedef struct{
   int GameField[GameFieldGridsHeight][GameFieldGridsWidth];
   Tetromino currentTetromino;
 
+  int linesClearedCounter;
+
 }GameScene;
 
 void gameSceneInit(SceneManager *sm);

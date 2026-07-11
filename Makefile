@@ -1,5 +1,5 @@
 SCENESPATH = scenes/
-SCENES = $(SCENESPATH)gameScene.c $(SCENESPATH)gameOverScene.c
+SCENES = $(wildcard $(SCENESPATH)*.c)
 
 run: build
 	./bin/main

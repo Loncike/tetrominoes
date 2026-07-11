@@ -47,7 +47,10 @@ void gameSceneInit(SceneManager *sm){
   s->moveInterval = .1f;
 
   s->currentTetromino = (Tetromino){0};
-  s->currentTetromino.type = 0;
+  s->currentTetromino.type = rand() % 7;
+  assert(s->currentTetromino.type < 7 && "Tetromino type out of range");
+
+  s->linesClearedCounter = 0;
 
   s->globalState->score = 0;
 
@@ -107,8 +110,6 @@ void gameSceneUpdate(SceneManager *sm){
   }
 
   int linesCleared = 0;
-  int linesOffset = 0;
-  int tmpY = 0;
   for (int y = 0; y < GameFieldGridsHeight; ++y) {
     int full = 1;
     for (int x = 0; x < GameFieldGridsWidth; ++x) {
@@ -128,23 +129,28 @@ void gameSceneUpdate(SceneManager *sm){
     }
   }
 
-  //TODO do level based scoring
+  s->linesClearedCounter += linesCleared;
+  if (s->linesClearedCounter >= 10){
+    s->linesClearedCounter = 0;
+    s->globalState->level++;
+  }
+
   //TODO maybe no need for switch, and can be solved by math only
   switch(linesCleared){
     case 0:
       // so we dont log it as too much
       break;
     case 1:
-      s->globalState->score +=  40;
+      s->globalState->score +=    40 * (s->globalState->level + 1);
       break;
     case 2:
-      s->globalState->score += 100;
+      s->globalState->score +=   100 * (s->globalState->level + 1);
       break;
     case 3:
-      s->globalState->score += 300;
+      s->globalState->score +=   300 * (s->globalState->level + 1);
       break;
     case 4:
-      s->globalState->score += 1200;
+      s->globalState->score +=  1200 * (s->globalState->level + 1);
       break;
     default:
       TraceLog(LOG_WARNING, "Too much lines cleard %d", linesCleared);

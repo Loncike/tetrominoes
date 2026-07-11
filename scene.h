@@ -1,4 +1,4 @@
-/*  scene.h - v0.1 - Public domain scene system for raylib
+/*  scene.h - v0.2 - Public domain scene system for raylib
 
     For a demo, see: https://github.com/loncike/scene.h
 
@@ -35,7 +35,15 @@
   #include <assert.h>
   #define SCENESYSTEM_ASSERT(x) assert(x)
 #endif
- 
+
+#define SCENESYSTEM_INTERNAL_CAT_(a, b) a##b
+#define SCENESYSTEM_INTERNAL_CAT(a, b) SCENESYSTEM_INTERNAL_CAT_(a, b)
+
+#define SCENESYSTEM_DECLARFUNCS(sceneName) \
+  void SCENESYSTEM_INTERNAL_CAT(sceneName, Init)(SceneManager *sm); \
+  void SCENESYSTEM_INTERNAL_CAT(sceneName, Update)(SceneManager *sm); \
+  void SCENESYSTEM_INTERNAL_CAT(sceneName, Draw)(SceneManager *sm); 
+
 typedef struct Scene Scene;
 typedef struct SceneManager SceneManager;
 
